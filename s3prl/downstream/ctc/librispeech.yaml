@@ -36,7 +36,7 @@ optimizer:
 downstream_expert:
   corpus:                                 
     name: 'librispeech'                   # Specify corpus
-    path: '/path/to/LibriSpeech'          # Path to raw LibriSpeech dataset
+    path: '/cfs/collections/librispeech/LibriSpeech'          # Path to raw LibriSpeech dataset
 
     train: ['train-clean-100']                # Name of data splits to be used as training set
     dev: ['dev-clean']                    # Name of data splits to be used as validation set
@@ -54,19 +54,19 @@ downstream_expert:
     project_dim: 1024
     zero_infinity: True
 
-    select: RNNs
-    Wav2Letter:
-      total_rate: 320
-    RNNs:
-      total_rate: 320
-      module: 'LSTM'                        # 'LSTM'/'GRU'
-      bidirection: True
-      dim: [1024, 1024, 1024]
-      dropout: [0.2, 0.2, 0.2]
-      layer_norm: [True, True, True]
-      proj: [True, True, True]              # Linear projection + Tanh after each rnn layer
-      sample_rate: [1, 1, 1]
-      sample_style: 'concat'                  # 'drop'/'concat'
+    select: FrameLevel
+    # Wav2Letter:
+    #   total_rate: 320
+    # RNNs:
+    #   total_rate: 320
+    #   module: 'LSTM'                        # 'LSTM'/'GRU'
+    #   bidirection: True
+    #   dim: [1024, 1024, 1024]
+    #   dropout: [0.2, 0.2, 0.2]
+    #   layer_norm: [True, True, True]
+    #   proj: [True, True, True]              # Linear projection + Tanh after each rnn layer
+    #   sample_rate: [1, 1, 1]
+    #   sample_style: 'concat'                  # 'drop'/'concat'
 
   save_best_on:
     - dev

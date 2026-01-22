@@ -88,7 +88,7 @@ class Runner():
     def __init__(self, args, config):
         self.args = args
         self.config = config
-        self.init_ckpt = torch.load(self.args.init_ckpt, map_location='cpu') if self.args.init_ckpt else {}
+        self.init_ckpt = torch.load(self.args.init_ckpt, map_location='cpu', weights_only=False) if self.args.init_ckpt else {}
 
         self.upstream = self._get_upstream()
         self.featurizer = self._get_featurizer()
@@ -292,7 +292,7 @@ class Runner():
 
                     wavs = [torch.FloatTensor(wav).to(self.args.device) for wav in wavs]
 
-                    with torch.cuda.amp.autocast(enabled=amp):
+                    with torch.amp.autocast('cuda', enabled=amp):
                         if self.upstream.trainable:
                             features = self.upstream.model(wavs)
                         else:
